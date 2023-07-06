@@ -1,3 +1,3 @@
 # 100DaysOfDSA
-Data Structures and Algorithm Practice__
-Solutions for leetcode problems__
+Data Structures and Algorithm Practice<br />
+Solutions for leetcode problems<br />
