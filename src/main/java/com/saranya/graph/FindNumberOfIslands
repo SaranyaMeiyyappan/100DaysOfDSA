@@ -1,0 +1,73 @@
+package main.java.com.saranya.graph;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+class Pair {
+	int first;
+	int second;
+	public Pair(int first, int second) {
+		this.first = first;
+		this.second = second;
+	}
+}
+
+public class FindNumberOfIslands {
+	
+	public static void main(String[] args) {
+		char[][] grid =  {
+	            {'0', '1', '1', '1', '0', '0', '0'},
+	            {'0', '0', '1', '1', '0', '1', '0'}
+	        };
+		FindNumberOfIslands obj = new FindNumberOfIslands();
+		System.out.println(obj.IslandCount(grid));
+	}
+
+	private static int IslandCount(char[][] grid) {
+		int n = grid.length;
+		int m = grid[0].length;
+		int[][] vis = new int[n][m];
+		int count = 0;
+		
+		for(int row=0; row<n; row++) {
+			for(int column=0; column<m; column++) {
+				if(vis[row][column]==0 && grid[row][column]=='1') {
+					count++;
+					bfs(grid, row, column, vis);
+				}
+			}
+		}
+		
+		return count;
+	}
+
+	private static void bfs(char[][] grid, int row, int column, int[][] vis) {
+		vis[row][column] = 1;
+		Queue<Pair> q = new LinkedList<>();
+		q.add(new Pair(row, column));
+		
+		int n = grid.length;
+		int m = grid[0].length;
+		
+		while(!q.isEmpty()) {
+			int currentRow = q.peek().first;
+			int currentColumn = q.peek().second;
+			q.remove();
+			
+			for(int adjRow=-1; adjRow<=1; adjRow++) {
+				for(int adjCol=-1; adjCol<=1; adjCol++) {
+					int neighbourRow = currentRow+adjRow;
+					int neighbourColumn = currentColumn+adjCol;
+					
+					if(neighbourRow >= 0 && neighbourColumn >= 0 &&
+							neighbourRow < n && neighbourColumn < m && 
+						grid[neighbourRow][neighbourColumn] == '1' && vis[neighbourRow][neighbourColumn] == 0) {
+						vis[neighbourRow][neighbourColumn] = 1;
+						q.add(new Pair(neighbourRow, neighbourColumn));
+					}
+				}
+			}
+		}
+	}
+
+}
